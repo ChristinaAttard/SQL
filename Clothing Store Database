@@ -1,0 +1,23 @@
+CREATE TABLE inventory (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, color TEXT, quantities INTEGER);
+INSERT INTO inventory VALUES (1, 'shirt', 20, 'red', 4);
+INSERT INTO inventory VALUES (2, 'shirt', 15, 'blue', 3);
+INSERT INTO inventory VALUES (3, 'shirt', 18, 'green', 1);
+INSERT INTO inventory VALUES (4, 'pants', 50,'navy', 4);
+INSERT INTO inventory VALUES (5, 'pants', 50, 'white', 5);
+INSERT INTO inventory VALUES (6, 'pants', 50, 'black', 2);
+INSERT INTO inventory VALUES (7, 'scarf', 10, 'floral', 3);
+INSERT INTO inventory VALUES (8, 'shoes', 25, 'yellow', 1);
+INSERT INTO inventory VALUES (9, 'jacket', 80, 'black', 5);
+INSERT INTO inventory VALUES (10, 'jacket', 80, 'brown', 2);
+INSERT INTO inventory VALUES (11, 'bra', 20, 'lacy', 3);
+INSERT INTO inventory VALUES (12, 'BRA', 25, 'RED', 4);
+insert into INVENTORY values (13, 'shorts', 13, 'light_blue', 5);
+INSERT INTO inventory VALUES (14, 'shorts', 13, 'black', 8);
+INSERT INTO inventory VALUES (15, 'dress', 46, 'purple', 5);
+
+SELECT * FROM inventory;
+SELECT * FROM inventory WHERE price >60;
+SELECT * FROM inventory WHERE color ORDER BY price;
+
+SELECT SUM(price) FROM inventory;
+SELECT SUM(color) FROM inventory GROUP BY price;
