@@ -1,0 +1,39 @@
+CREATE TABLE country_singers ( id INTEGER PRIMARY KEY, name TEXT, age INTEGER);
+
+INSERT INTO country_singers VALUES ( 1, "Carrie Underwood", 39);
+INSERT INTO country_singers VALUES ( 2, "Dolly Parton", 76);
+INSERT INTO country_singers VALUES ( 3, "Luke Bryan", 45);
+INSERT INTO country_singers VALUES ( 4, "Blake Shelton", 45);
+INSERT INTO country_singers VALUES ( 5, "Miranda Lambert", 38);
+INSERT INTO country_singers VALUES ( 6, "Thomas Rhett", 32);
+
+CREATE TABLE top_hits ( id INTEGER PRIMARY KEY, name TEXT, number_of_hits INTEGER);
+
+INSERT INTO top_hits VALUES (1, "Carrie Underwood", 85);
+INSERT INTO top_hits VALUES (2, "Dolly Parton", 25);
+INSERT INTO top_hits VALUES (3, "Luke Bryan", 29);
+INSERT INTO top_hits VALUES (4, "Blake Shelton", 28);
+INSERT INTO top_hits VALUES (5, "Miranda Lambert", 13);
+INSERT INTO top_hits VALUES (6, "Thomas Rhett", 14);
+
+CREATE TABLE hometowns (id INTEGER PRIMARY KEY, town TEXT, state TEXT);
+
+INSERT INTO hometowns VALUES (1, "Muskoge", "OK");
+INSERT INTO hometowns VALUES (2, "Sevier County", "TN");
+INSERT INTO hometowns VALUES (3, "Leesburg", "GA");
+INSERT INTO hometowns VALUES (4, "Ada", "OK");
+INSERT INTO hometowns VALUES (5, "Longview", "TX");
+INSERT INTO hometowns VALUES (6, "Valdosta", "GA");
+
+
+SELECT c.name, t.number_of_hits
+FROM country_singers AS c
+JOIN top_hits AS t
+ON c.id = t.id;
+
+SELECT c.name, t.number_of_hits, h.town, h.state
+FROM country_singers AS c
+JOIN top_hits AS t
+ON c.id = t.id
+JOIN hometowns AS h
+ON t.id = h.id;
