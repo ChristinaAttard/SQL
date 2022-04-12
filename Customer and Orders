@@ -10,8 +10,8 @@ FROM BIT_DB.JanSales
 WHERE Product='iPhone'
 
 #3. Select the customer account numbers for all the orders that were placed in February. 
-ELECT cust.acctnum
-FROM BIT_DB.customerS AS cust
+SELECT cust.acctnum
+FROM BIT_DB.customers AS cust
 INNER JOIN BIT_DB.FebSales AS Feb
 ON cust.order_id = Feb.orderID
 GROUP BY cust.acctnum;
@@ -26,7 +26,7 @@ ORDER BY price LIMIT 1;
 #5. What is the total revenue for each product sold in January?
 SELECT product, SUM(quantity)*price AS revenue
 FROM BIT_DB.JanSales
-GROUP BY product
+GROUP BY product;
 
 #6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 SELECT SUM(quantity), product, SUM(quantity)*price AS revenue
@@ -40,7 +40,8 @@ FROM BIT_DB.JanSales
 WHERE location LIKE '%NY%'
 AND quantity >1;
 
-#8. How many of each type of headphone were sold in February?SELECT product, SUM(quantity) 
+#8. How many of each type of headphone were sold in February?
+SELECT product, SUM(quantity) 
 FROM BIT_DB.FebSales
 WHERE product LIKE '%headphone%'
 GROUP BY product;
