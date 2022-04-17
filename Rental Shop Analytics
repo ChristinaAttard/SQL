@@ -1,0 +1,124 @@
+# For this project, I used the sakila database from MySQL.
+# I used the database and tables provided to practice SQL.
+
+# Select all columns from the film_actor table.
+SELECT * 
+FROM film_actor;
+
+# Select a list of unique last name of the customers.
+SELECT DISTINCT(last_name)
+FROM customer;
+
+# Select a list of film titles, the year they were released, the length of the film, and the rental rate.
+SELECT title, release_year, length, rental_rate
+FROM film;
+
+# Select the title, description, and rental rate of all PG films.
+SELECT title, description, rental_rate
+FROM film
+WHERE rating = 'PG';
+
+# Select all titles and replacement costs for movies that would cost less than $20 to replace.
+SELECT title, replacement_cost
+FROM film
+WHERE replacement_cost <20;
+
+#Pull all address information in the California district.
+SELECT *
+FROM address
+WHERE district = 'California';
+
+#Select title, description, rating, length, and rental rate for films that are less than 120 minutes and are rated either G or PG.
+SELECT title, description, rating, length, rental_rate
+FROM film
+WHERE length <120
+AND (rating = 'G' OR rating = 'PG');
+
+#Select all films that can be rented for 5 or more days and is 90 minutes or longer. Also include all options where the rental rate is .99.
+SELECT *
+FROM film
+WHERE (rental_duration >= 5 AND length >= 90)
+OR rental_rate = .99;
+
+#Pull all columns for films that strta with the letter Z.
+SELECT *
+FROM film
+WHERE title LIKE 'Z%';
+
+#Find all customers whose first name starts with K and last name starts with E.
+SELECT *
+FROM customer
+WHERE first_name LIKE 'K%'
+AND last_name LIKE 'E%';
+
+#Select the total number of customers.
+SELECT COUNT(customer_id)
+FROM customer;
+
+#Pull the average amount spent by each customer id.
+SELECT AVG(amount), customer_id
+FROM payment
+GROUP BY customer_id;
+
+#Select the sum and the average of all replacement costs, group by their rating.
+SELECT rating, SUM(replacement_cost), AVG(replacement_cost)
+FROM film
+GROUP BY rating;
+
+#How many customers are active and not active. Group them by store.
+SELECT COUNT(customer_id), active, store_id
+FROM customer
+GROUP BY active, store_id
+ORDER BY COUNT(customer_id);
+
+#Select all customer id's for customers who have spent at least $100. List all the customers and the total theyt have spent.
+SELECT customer_id, SUM(amount)
+FROM payment
+GROUP BY customer_id
+HAVING SUM(amount) >100;
+
+#Pull a list of rental id's and their total amount where the total was greater than $10.
+SELECT payment.rental_id, SUM(amount)
+FROM rental
+INNER JOIN payment
+ON rental.rental_id = payment.rental_id
+GROUP BY payment.rental_id
+HAVING SUM(amount)>10;
+
+#Select all titles and their rental rate ordered from least to most expensive with a rating of either PG or G.
+SELECT title, rental_rate
+FROM film
+WHERE (rating = 'G' OR rating = 'PG')
+ORDER BY rental_rate;
+
+#Find the district name and the count of address id's in each district. 
+SELECT district, COUNT(address_id)
+FROM address
+GROUP BY district
+ORDER BY COUNT(address_id) DESC;
+
+#Pull a list of all films that star Jennifer Davis (actor id = 4).
+SELECT title
+FROM film_actor AS fa
+INNER JOIN film AS f
+ON fa.film_id=f.film_id
+WHERE actor_id = 4;
+
+#Pull the first name, last name, address, district, and city id for Sarah Lewis.
+SELECT cust.first_name, cust.last_name, ad.address, ad.district, ad.city_id
+FROM customer AS cust
+INNER JOIN address AS ad
+ON cust.address_id=ad.address_id
+WHERE first_name = 'Sarah'
+AND last_name = 'Lewis';
+
+#Pull all rental records for Sarah lewis.
+SELECT *
+FROM payment AS pay
+INNER JOIN customer AS cust
+ON pay.customer_id=pay.customer_id
+WHERE first_name = 'Sarah'
+AND last_name = 'Lewis';
+
+
+
