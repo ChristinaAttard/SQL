@@ -1,5 +1,5 @@
 # For this project, I used the sakila database from MySQL.
-# I used the database and tables provided to practice SQL.
+# I used the database and tables provided to practice SQL with questions provided by SQL Pal.
 
 # Select all columns from the film_actor table.
 SELECT * 
@@ -120,5 +120,52 @@ ON pay.customer_id=pay.customer_id
 WHERE first_name = 'Sarah'
 AND last_name = 'Lewis';
 
+#Pull the title, description, rental rate, and the rating fro films that can be rented for 6 days or more.
+SELECT title, description, rental_rate, rating
+FROM film
+WHERE rental_duration >=6;
 
+#Pull a list of titles, descriptions, rental rates, and ratings for films not rated 'NC-17'.
+SELECT title, description, rental_rate, rating
+FROM film
+WHERE rating <> 'NC-17';
 
+#Pull the title, description, rating, length, and rental rate for films not rated G or PG and can be rented for 2.99 or less.
+SELECT title, description, rating, length, rental_rate
+FROM film
+WHERE (rating <> 'G' AND rating <> 'PG')
+AND rental_rate <=2.99;
+
+#Pull a list of film titles, description, length, rental rate, and rating for films between 90 adn 120 minutes and can be rented for $.99 or $2.99.
+SELECT title, description, length, rental_rate, rating
+FROM film
+WHERE (length >=90 AND length <=120)
+AND rental_rate <2.99;
+
+#Select a list of film id's where there is 3 copies or less.
+SELECT film_id, COUNT(inventory_id)
+FROM inventory
+GROUP BY film_id
+HAVING COUNT(inventory_id) <=3;
+
+#Select all film id's and the number of actors where the film has 5 or more actors.
+SELECT film_id, COUNT(actor_id)
+FROM film_actor 
+GROUP BY film_id
+HAVING COUNT(actor_id) >5;
+
+#Pull a list of customer first and last name and now many times they have rented. 
+SELECT cust.first_name, cust.last_name, COUNT(DISTINCT ren.rental_id) AS Rental_count
+FROM customer AS cust
+INNER JOIN rental AS ren
+ON cust.customer_id = ren.customer_id
+GROUP BY first_name, last_name;
+
+#Which actor has been in the most films?
+SELECT first_name, last_name, COUNT(DISTINCT film_id)
+FROM actor
+INNER JOIN film_actor
+ON actor.actor_id=film_actor.actor_id
+GROUP BY first_name, last_name
+ORDER BY COUNT(DISTINCT film_id) DESC
+LIMIT 1;
